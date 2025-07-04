@@ -1,0 +1,43 @@
+services:
+  postgres:
+    hostname: postgres
+    image: postgres:13-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: expense_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d expense_tracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - expense_network
+
+  expense-tracker:
+    build:
+      context: . # Set monorepo root as the build context
+      dockerfile: /Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "user=user password=password dbname=expense_tracker host=postgres port=5432 sslmode=disable"
+      JWT_SECRET: "your-secret-key"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - expense_network
+
+volumes:
+  postgres-data:
+
+networks:
+  expense_network:
+    driver: bridge

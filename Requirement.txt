@@ -1,0 +1,114 @@
+📌 Assignment Title:
+Full-Featured Expense Tracker REST API with Concurrency, Auth, Rate Limiting, and Dockerization (Go)
+
+🎯 Objective:
+Design, implement, and deliver a production-grade backend API for an expense tracking system, focusing on clean code structure, concurrency safety, secure access, and deployment readiness.
+
+🚀 Functional Requirements:
+✅ Expense Model:
+Each expense record must contain:
+
+id (UUID)
+
+user_id (UUID)
+
+amount (float64)
+
+currency (3-letter code, e.g., USD)
+
+category (e.g., food, travel, entertainment)
+
+description (string, max 256 chars)
+
+timestamp (ISO8601 string or RFC3339)
+
+✅ Endpoints:
+
+POST /api/v1/expenses → Create an expense
+
+GET /api/v1/expenses/{id} → Get expense by ID
+
+PUT /api/v1/expenses/{id} → Update expense
+
+DELETE /api/v1/expenses/{id} → Delete expense
+
+GET /api/v1/expenses → List expenses with filters
+
+GET /api/v1/expenses/summary → Aggregate by category within date range
+
+💡 Filter query params: user_id, category, currency, from, to
+
+💡 Summary output: {"food": 120.50, "travel": 300.00, "other": 50.00}
+
+✅ Authentication:
+
+Use JWT-based auth
+
+Implement a basic /api/v1/auth/login endpoint that issues JWT tokens on valid credentials (hardcoded user for demo OK)
+
+✅ Rate Limiting:
+
+Limit 10 requests per minute per user (identified via JWT)
+
+Return 429 Too Many Requests when exceeded
+
+✅ Persistence:
+
+PostgreSQL (preferred) — provide SQL schema
+
+DB access must be concurrency-safe
+
+✅ Dockerization:
+
+Provide Dockerfile for the Go app
+
+Provide docker-compose.yml to spin up API + PostgreSQL
+
+Make sure the app builds and runs without local Go installation
+
+✅ OpenAPI (Swagger) documentation:
+
+Use a Go tool (e.g., swaggo/swag) to generate OpenAPI spec
+
+Serve at /swagger/index.html
+
+✅ Testing:
+
+Unit tests for handlers and services (≥ 80% coverage for core logic)
+
+At least one integration test that tests a complete request → DB → response flow
+
+🌟 Bonus Requirements (Mandatory for this version):
+🔥 Pagination support on list API (limit, offset)
+
+🔥 Currency normalization: If a user requests summary in a specific currency (e.g., ?target_currency=USD), convert amounts (mock conversion rates in code — no need to call external API)
+
+🔥 Graceful shutdown: Properly handle SIGINT and SIGTERM
+
+🔥 Structured logging (e.g., using logrus or zerolog)
+
+🔥 Environment config support: Read sensitive info (e.g., DB creds, JWT secret) via env variables
+
+🛠 Technical Expectations:
+Use Gin or Echo (or net/http if confident)
+
+Use GORM or pgx for DB (or standard database/sql)
+
+Clean architecture: separate models, handlers, services, repositories
+
+Dependency injection pattern (optional but preferred)
+
+📝 Deliverables:
+✅ Complete codebase in GitHub/GitLab repo
+✅ README with:
+
+Setup & run instructions
+
+API usage examples
+
+DB schema
+
+Screenshots (Swagger UI, Postman/cURL examples)
+
+✅ Tests + coverage report
+✅ Dockerfile + docker-compose.yml
