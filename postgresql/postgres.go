@@ -2,6 +2,7 @@ package postgresql
 
 import (
 	"expense-tracker/model"
+	"os"
 
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
@@ -11,7 +12,10 @@ import (
 var DB *gorm.DB // global DB instance
 
 func ConnectPostgres() {
-	dsn := "user=user password=password dbname=expense_tracker host=postgres port=5432 sslmode=disable"
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "user=user password=password dbname=expense_tracker host=localhost port=5432 sslmode=disable"
+	}
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {

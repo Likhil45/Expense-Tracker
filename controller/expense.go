@@ -36,7 +36,7 @@ func CreateExpense(c *gin.Context) {
 	expense.User_id = uuid.New().String()
 
 	// Save to DB
-	if err := postgresql.DB.FirstOrCreate(&expense).Error; err != nil {
+	if err := postgresql.DB.Create(&expense).Error; err != nil {
 		log.Errorf("Failed to create expense: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create expense"})
 		return
