@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install -g @stoplight/spectral-cli
-      - run: spectral lint docs/swagger.yaml
+      - run: spectral lint docs/swagger.yaml --ruleset .spectral.yaml
