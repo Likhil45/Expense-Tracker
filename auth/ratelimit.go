@@ -10,7 +10,6 @@ import (
 	memory "github.com/ulule/limiter/v3/drivers/store/memory"
 )
 
-// Extract user_id from JWT context (set by your JWT middleware)
 func RateLimitMiddleware() gin.HandlerFunc {
 	// 10 requests per minute
 	rate, _ := limiter.NewRateFromFormatted("10-M")

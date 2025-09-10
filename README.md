@@ -59,6 +59,9 @@ curl -X GET "http://localhost:8080/api/v1/expenses/summary?target_currency=USD" 
 Screenshot:
 ![alt text](image-4.png)
 
+Rate Limiting:
+![alt text](image-5.png)
+
 🗄️ DB Schema
 User Table
 CREATE TABLE users (

@@ -18,6 +18,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: This is a sample server for an expense tracker.
+  title: Expense Tracker API
+  version: "1.0"
 paths:
   /api/v1/expenses:
     get:
@@ -357,4 +360,9 @@ paths:
       summary: Create a new user (admin use)
       tags:
       - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
