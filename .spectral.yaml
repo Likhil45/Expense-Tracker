@@ -1,0 +1,30 @@
+extends: ["spectral:oas"]   # Start with built-in OpenAPI rules
+
+rules:
+  # Ensure each operation has a summary
+  operation-summary-required:
+    description: "Each operation must have a summary."
+    given: "$.paths[*][*]"
+    then:
+      field: summary
+      function: truthy
+
+  # Ensure HTTPS URLs only
+  no-http-urls:
+    description: "Only HTTPS is allowed in server URLs."
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  # Require 400 and 500 error responses
+  error-responses-required:
+    description: "All operations must define 400 and 500 error responses."
+    given: "$.paths[*][*].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["400", "500"]
